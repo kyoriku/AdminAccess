@@ -1,303 +1,127 @@
-<a ID="readme-top"></a>
+# AdminAccess
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg?style=for-the-badge&logo=mit)](https://opensource.org/licenses/MIT)
 
-<div align="center">
-
-# ⭐ Employee Management System: HR-Module ⭐
-
-[![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)](https://www.w3schools.com/js/)
-[![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/)
-[![MySQL2 Badge](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
-[![Express Badge](https://img.shields.io/badge/Express-000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
+## Built With
+[![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)](https://www.javascript.com/)
+[![MySQL2](https://img.shields.io/badge/MySQL-005C84?style=for-the-badge&logo=mysql&logoColor=white)](https://www.mysql.com/)
+[![Express.js](https://img.shields.io/badge/Express-000?style=for-the-badge&logo=express&logoColor=white)](https://expressjs.com/)
 [![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)](https://react.dev/)
-[![Node.js Badge](https://img.shields.io/badge/Node.js-393?style=for-the-badge&logo=nodedotjs&logoColor=fff)](https://nodejs.org/en)
-[![Dotenv Badge](https://img.shields.io/badge/Dotenv-000?style=for-the-badge&logo=javascript&logoColor=white)](https://www.npmjs.com/package/dotenv)
-[![Sequelize Badge](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)](https://www.npmjs.com/package/sequelize)
-[![GitHub Badge](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/justinsta624/)
+[![Node.js](https://img.shields.io/badge/Node.js-393?style=for-the-badge&logo=nodedotjs&logoColor=fff)](https://nodejs.org/en)
+[![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)](https://www.npmjs.com/package/sequelize)
+[![NPM](https://img.shields.io/badge/NPM-%23CB3837.svg?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/)
+[![Axios](https://img.shields.io/badge/Axios-5A29E4.svg?style=for-the-badge&logo=Axios&logoColor=white)](https://www.npmjs.com/package/axios)
+[![Bcrypt](https://img.shields.io/badge/Bcrypt-338?style=for-the-badge&logo=javascript&logoColor=white)](https://www.npmjs.com/package/bcrypt)
+[![Dotenv](https://img.shields.io/badge/Dotenv-000?style=for-the-badge&logo=javascript&logoColor=white)](https://www.npmjs.com/package/dotenv)
+[![Nodemon](https://img.shields.io/badge/Nodemon-76D04B.svg?style=for-the-badge&logo=Nodemon&logoColor=white)](https://www.npmjs.com/package/nodemon)
+[![Vite](https://img.shields.io/badge/vite-%23646CFF.svg?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Bootstrap](https://img.shields.io/badge/bootstrap-%238511FA.svg?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 [![Heroku](https://img.shields.io/badge/heroku-%23430098.svg?style=for-the-badge&logo=heroku&logoColor=white)](https://dashboard.heroku.com/apps)
+[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/justinsta624/)
 
-</div>
-</div>
-
-## Goal of the Project
-
-- Create the robust "Human Resources Module Application" helps to `communicate` `manage` `update` `change` to employment records in `Employee Management System`
-
-### In General
-
-- Essential role of projects in the journey to becoming a full-stack web developer.
-- When Apply for development jobs, portfolio is absolutely vital to opening doors to opportunities, showcases high-quality deployed examples of work.
-- Fantastic opportunity to show employers your collaborative skills and coding abilities, especially in the context of a scalable, user-focused MERN application.
-- Employers seek evidence of both individual capabilities and collaboration with other developers.
-- Increased chances of interviews and job offers with a portfolio featuring deployed collaborative projects.
-
-### As a full-stack web developer
-
-- `CRUD Operations` </div>
-  Develop functionality to perform CRUD operations (Create, Read, Update, Delete) for departments, roles, managers and employees.
-- `Secure Authentication`
-  </div> Implement JWT-based authentication to securely authenticate admin users.
-- `User Interface Design`
-  </div> Design an intuitive and user-friendly interface using React components for efficient navigation and interaction.
-- `Comprehensive Overview`
-  </div> Provide a comprehensive overview of all departments, roles, and employees for easy access and management.
-- `Data Input/Data Modification`
-  </div> Allow administrators to input necessary details to create new entries for departments, roles, and employees in the database. Enable administrators to update employee roles or manager assignments to reflect accurate responsibilities and reporting structures.
-- `Error Handling`
-  </div> Implement robust error handling mechanisms to gracefully handle errors and provide informative error messages to users when issues occur.
-
-</div>
-
-<div align="center">
-
-</div>
-</div>
+## Description
+AdminAccess is a comprehensive employee data management solution designed for administrators, built with the MERN stack (MySQL, Express, React, Node). It ensures secure authentication and intuitive interface interactions. Administrators can securely log in and access options to view, add, update, and delete departments, roles, employees, and managers. They can add new entries, update roles, and delete data with confirmation dialogs to prevent accidental deletion. The application offers seamless navigation and a user-friendly interface, enhancing productivity and data management efficiency. Overall, AdminAccess provides a robust solution for organizations to manage their employee data effectively, focusing on security, efficiency, and user experience.
 
 ## Table of Contents
+1. [Description](#description)
+2. [Deployment](#deployment)
+3. [Installation](#installation)
+4. [Usage](#usage)
+5. [Screenshots](#screenshots)
+6. [Collaborators](#collaborators)
+7. [License](#license)
+8. [Questions](#questions)
 
-- [Goal of the Project](#Goal-of-the-Project)
-- [Screenshots](#Screenshots)
-- [User Story](#User-Story)
-- [Acceptance Criteria](#Acceptance-Criteria)
-- [Installation](#Installation)
-- [Screenshots](#screenshots)
-- [Tasks](#tasks)
-- [Technology Used](#technology-used)
-- [Reference](#Reference)
-- [License](#license)
-- [Collaborators](#Collaborators)
-- [Presentation](#Presentation)
-- [Deployment](#Deployment)
 
-## User Story <a ID="user-story"></a>
-
-### This application was developed with this user story in mind:
-
-```md
-AS AN admin managing employee data
-I WANT to efficiently view, add, update, and delete departments, roles, and employees
-SO THAT I can maintain an organized and up-to-date employee management system
-```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Acceptance Criteria <a ID="acceptance-criteria"></a>
-
-### This application was developed with the below User acceptance criteria:
-
-```md
-GIVEN an employee management system web application
-WHEN I log in as an admin
-THEN I am securely authenticated using session-based authentication
-WHEN I access the employee management system
-THEN I am presented with options to view, add, update, and delete departments, roles, employees, and managers
-WHEN I choose to view departments, roles, employees, or managers
-THEN I am able to see a comprehensive overview of all departments, roles, employees, and managers
-WHEN I add a new department, role, employee, or manager
-THEN I am able to input the necessary details to create a new entry in the database
-WHEN I update employee or manager roles
-THEN I can modify relevant information to reflect accurate responsibilities and reporting structures
-WHEN I perform actions like deleting data
-THEN I receive confirmation dialogs to ensure intentional actions are taken
-WHEN I delete a department, role, employee, or manager
-THEN I can efficiently remove the selected entry from the database
-WHEN I navigate through different views
-THEN I can move seamlessly between dashboard, add/edit forms, and other sections using routing
-without the page reloading
-WHEN I interact with the user interface
-THEN I find it intuitive and user-friendly, built using React components
-```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## Deployment
+AdminAccess is deployed on Heroku. You can access the live application [here](https://adminaccess-f697b23e85fa.herokuapp.com/).
 
 ## Installation
+To get started with AdminAccess, follow these steps:
 
-Please follow these steps to install, refer to, contribute, or reflect our project in your work.
+1. Clone the repository to your local machine.
+    ```bash
+    git clone https://github.com/kyoriku/AdminAccess.git
+    ```
 
-1. Clone -or- Fork the repository
-2. Run the below in console install necessary packages for both Client (front-end) and Server (back-end) sides.
+2. Navigate to the project directory.
+    ```bash
+    cd AdminAccess
+    ```
 
-```
-npm run install
-```
+3. Install the required dependencies for both the client (front-end) and server (back-end) sides.
+    ```bash
+    npm install
+    ```
 
-3. After NPM packages have been installed, you'll need to set up your MySQL database for the application to read and write to. Log into MySQL2:
+4. Create a `.env` file in the server directory and fill in your database credentials.
+    ```bash
+    DB_NAME='your_database_name'
+    DB_USER='your_MySQL_username'
+    DB_PASSWORD='your_MySQL_password'
+    SESSION_SECRET='your_session_secret'
+    ADMIN_USERNAME='your_admin_username'
+    ADMIN_EMAIL='your_admin_email_address'
+    ADMIN_PASSWORD='your_admin_password'
+    ```
 
-```
-mysql -u root -p
-```
+5. Set up MySQL database.
+    - **Using MySQL Workbench:**
+      - Open MySQL Workbench and connect to your MySQL server.
+      - Create a new schema/database (if it doesn't exist already) by clicking on the "Create a new schema in the connected server" icon or through the "File" > "New Model" menu.
+      - Name the schema/database with the desired name, e.g., `your_database_name`.
+      - Execute the schema provided in the `db/schema.sql` file within the created schema/database to set up the necessary tables and structure.
 
-4. Within mysql2 - create the database with the schema provided, run the below command in the root folder (the below is the relative path):
+    - **Using MySQL Command Line:**
+      - Log into MySQL and create the necessary database by executing the schema provided in the `db/schema.sql` file. Replace `<username>` with your MySQL username.
+      ```bash
+      mysql -u <username> -p
+      source db/schema.sql
+      quit 
+      ```
 
-```
-source ./db/schema.sql
-```
+6. Seed the database.
+    ```bash
+    npm run seed
+    ```
 
-5. Exit MySQL2:
-
-```
-quit
-```
-
-6. Seeding -or- populating a database with necessary data
-
-```
-npm run seed
-```
-
-7. You can run start the server once packages have been installed and the database is created. Run the below in the CLI:
-
-```
-npm run start.js or npm run develop
-```
-
-HR-Module is deployed VIA following link </div>
-<a href="https://h-r-m-a459d9418603.herokuapp.com"> HEROKU </a>
+## Usage
+1. Once dependencies are installed, the environment variables are created, and the database is set up: navigate to the root directory of the project and start the server.
+    ```bash
+    npm run develop
+    ```
+    This command initiates both the server and client development environments concurrently. It will launch the development server and open AdminAccess in your default web browser. If not, navigate to http://localhost:3000 in your browser.
 
 ## Screenshots
-
-The following images show the web application's appearance and functionality:
-
-![alt text](./client/public/images/image-1.png)
-![alt text](./client/public/images/image-2.png)
-![alt text](./client/public/images/image-3.png)
-![alt text](./client/public/images/image-4.png)
-![alt text](./client/public/images/image-5.png)
-![alt text](./client/public/images/image-6.png)
-![alt text](./client/public/images/image-7.png)
-![alt text](./client/public/images/image-8.png)
-![alt text](./client/public/images/image-9.png)
-![alt text](./client/public/images/image-10.png)
-
-## Tasks
-
-### In General
-
-- Create a MERN stack single-page application that works with real-world data to solve a real-world challenge, with a focus on data and user demand.
-- Use React for the front end.
-- Use Node.js and Express.js server.
-- Use MySQL2 and the Sequelize for the database.
-- Use Axios for retrieving, adding, updating, and deleting data.
-- Be deployed using Heroku (with data).
-- Have a polished UI.
-- Be responsive & interactive (i.e., accept and respond to user input).
-- Include authentication (JWT).
-- Have a clean repository that meets quality coding standards (file structure, naming conventions, best practices for class and id naming conventions, indentation, high-quality comments, etc.).
-- Have a high-quality README (with unique name, description, technologies used, screenshot, and link to deployed application).
-
-### Vite for React: Steps to follow
-
-- To serve as a tool for quickly setting up and developing modern web applications, like React.
-- Focuses on providing a fast development experience by leveraging ES module imports, pre-bundling dependencies during development, and optimizing build times.
-
-1. In the command line, navigate to the desired parent folder and run `npm create vite@latest`.
-2. Enter the desired name of new project folder.
-3. From the first list of options, select framework; for activities in class, we'll be using `React`.
-4. From the second list of options, select variant; for activities in class, we'll be using `JavaScript`.
-5. `cd` into your newly created project folder and run `npm install`.
-6. Run `npm dev`/`npm run dev` and navigate to the prompted URL to see application.
-
-### Further customization
-
-1. Navigate to `package.json` and modify the `scripts` object so that it looks like this example:
-
-```json
-  "scripts": {
-    "dev": "vite",
-    "start": "vite",
-    "build": "vite build",
-    "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
-  },
-```
-
-2. Navigate to the `vite.config.js` file and edit the export object so that it looks like this example:
-
-```js
-export default defineConfig({
-  plugins: [react()],
-  server: {
-    port: 3000,
-    open: true,
-  },
-});
-```
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-## Technologies used <a ID="technologies-used"></a>
-
-- **Node.js**: Runtime environment for executing server-side JavaScript code.
-- **Express**: Web application framework for building RESTful APIs.
-- **MySQL2**: MySQL database driver for Node.js.
-- **Sequelize**: Promise-based ORM for interacting with databases.
-- **Bcrypt**: Library for securely hashing passwords.
-- **Dotenv**: Utility for loading environment variables.
-- **Nodemon**: Development tool for auto-reloading the server during development.
-- **React**: Open-source JS library used for building user interfaces or UI components, particularly for single-page applications where user interactions are dynamic and frequent.
-- **Axios**: Promise-based HTTP client for making HTTP requests in JavaScript environments, including browsers and Node.js, used for performing CRUD operations (Create, Read, Update, Delete) in web applications.
-- **Vite**: Build tool and development server for modern web development projects.
-- **Heroku**: A cloud platform that offers easy deployment and management of web applications.
-
-## Reference
-
-- [Node.js & Express.js to create a RESTful API](https://docs.github.com/en/rest?apiVersion=2022-11-28)
-- [Handlebars.js as the Template Engine](https://handlebarsjs.com/)
-- [MySQL Workbench for the Database](https://dev.mysql.com/doc/mysql-getting-started/en/)
-- [GET & POST Routes for retrieving & adding New Data](https://expressjs.com/en/guide/using-middleware.html)
-- [Sequelize ORM for the Database](https://sequelize.org/docs/v6/)
-- [GET & POST Routes for retrieving & adding New Data](https://expressjs.com/en/guide/using-middleware.html)
-- [Folder Structure with MVC Paradigm](https://docs.google.com/presentation/d/1RIA8VZVN4_JAaL0xSPf1GPc8b5dJlM5V43EVNEZ_kfA/edit#slide=id.g104b0cd1c59_0_2178)
-- [Authentication and Cookies](https://github.com/expressjs/session#cookie)
-- [Deployment using HEROKU](https://coding-boot-camp.github.io/full-stack/heroku/deploy-with-heroku-and-mysql)
-- [Polished UI Tips and Tools](https://guides.codepath.com/android/Polishing-a-UI-Tips-and-Tools)
-- [How to meet High-Quality Coding Standards](https://www.freecodecamp.org/news/how-to-write-clean-code/)
-- [React Docs: Getting Started](https://react.dev/learn)
-- [Vite Docs: Getting Started](https://vitejs.dev/guide/)
-- [React Docs on JSX](https://react.dev/learn/writing-markup-with-jsx)
-- [JSON Web Tokens](https://jwt.io/introduction)
-- [How To Use Axios with React](https://www.digitalocean.com/community/tutorials/react-axios-react)
-- [Axios in React: A Guide for Beginners](https://www.geeksforgeeks.org/axios-in-react-a-guide-for-beginners/)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+![login](./client/public/images/1-login.jpg)
+![departments-list](./client/public/images/2-departments-list.jpg)
+![add-department](./client/public/images/3-add-department.jpg)
+![edit-department](./client/public/images/4-edit-department.jpg)
+![delete-department](./client/public/images/5-delete-department.jpg)
+![roles-list](./client/public/images/6-roles-list.jpg)
+![add-role](./client/public/images/7-add-role.jpg)
+![edit-role](./client/public/images/8-edit-role.jpg)
+![delete-role](./client/public/images/9-delete-role.jpg)
+![employees-list](./client/public/images/10-employees-list.jpg)
+![add-employee](./client/public/images/11-add-employee.jpg)
+![edit-employee](./client/public/images/12-edit-employee.jpg)
+![delete-employee](./client/public/images/13-delete-employee.jpg)
+![managers-list](./client/public/images/14-managers-list.jpg)
+![add-manager](./client/public/images/15-add-manager.jpg)
+![edit-manager](./client/public/images/16-edit-manager.jpg)
+![delete-manager](./client/public/images/17-delete-manager.jpg)
 
 ## Collaborators
-
 [![OzdalDogru](https://img.shields.io/badge/Ozdal-Dogru-blueviolet.svg?style=for-the-badge&logo=DOGRU)](https://github.com/ozdaldogru)
 [![AustinGraham](https://img.shields.io/badge/Austin-Graham-red.svg?style=for-the-badge&logo=GRAHAM)](https://github.com/kyoriku)
-[![DanNadler](https://img.shields.io/badge/Dan-Nadler-green.svg?style=for-the-badge&logo=NADLER)](https://github.com/dannadlerp/)
+[![DanNadler](https://img.shields.io/badge/Dan-Nadler-green.svg?style=for-the-badge&logo=NADLER)](https://github.com/dannadlerp)
 [![JustinLee](https://img.shields.io/badge/Justin-Lee-magenta.svg?style=for-the-badge&logo=LEE)](https://github.com/justinsta624)
 
-## Presentation
-
-[Group 5 Presentation of Project: HR-Module](https://docs.google.com/presentation/d/1ZLYdRFarGXJVZXaeoLB7-ziaqXrgrfQr/edit?usp=sharing&ouid=107335282898826746758&rtpof=true&sd=true)
-
-to address the following:
-
-- `Elevator pitch` A one-minute description of your application.
-- `Concept` What is your `user story`? What was your motivation for development?
-- `Process` What were the `technologies` used? How were `tasks` and `roles` broken down and assigned? What `challenges` did you encounter? What were your `successes`?
-- `Demo`: Show your `application`
-- Directions for `future development`.
-
-## Outcome
-
-Followings are the outcomes of the project 3:
-
-- The URL of the deployed application on Heroku. </br>
-  [Deployed Application](https://h-r-m-a459d9418603.herokuapp.com) </br>
-
-- The URL of the GitHub repository, with a unique name and a README describing the project </br>
-  [Repository for this Project](https://github.com/ozdaldogru/HR-Module)
-
 ## License
+This application is covered by the [MIT](https://opensource.org/licenses/MIT) license.
 
-For details click on the following link to go to the "LICENSE" file:
-
-[![License: ISC](https://img.shields.io/badge/License-ISC-blue.svg?style=for-the-badge&logo=isc)](https://opensource.org/licenses/ISC)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=for-the-badge&logo=mit)](https://opensource.org/licenses/MIT)
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+## Questions
+If you have any questions, please do not hesitate to reach out: devkyoriku@gmail.com.
 
 ---
 
-© 2024 "HR-Module" by `Project 3` `Group 5`. All Rights Reserved.
+© 2024 "AdminAccess" by [Ozdal](ttps://github.com/ozdaldogru), [Austin](https://github.com/kyoriku), [Dan](https://github.com/dannadlerp), & [Justin](https://github.com/justinsta624). All Rights Reserved.
