@@ -64,7 +64,7 @@ const AppNavbar = () => {
                 </>
               )}
               {!loggedIn && (
-                <Nav.Link onClick={() => setShowModal(true)}>Login/Sign Up</Nav.Link>
+                <Nav.Link onClick={() => setShowModal(true)}>Login</Nav.Link>
               )}
             </Nav>
           </Navbar.Collapse>
@@ -83,9 +83,9 @@ const AppNavbar = () => {
                 <Nav.Item>
                   <Nav.Link eventKey='login'>Login</Nav.Link>
                 </Nav.Item>
-                <Nav.Item>
+                {/* <Nav.Item>
                   <Nav.Link eventKey='signup'>Sign Up</Nav.Link>
-                </Nav.Item>
+                </Nav.Item> */}
               </Nav>
             </Modal.Title>
           </Modal.Header>
@@ -94,9 +94,9 @@ const AppNavbar = () => {
               <Tab.Pane eventKey='login'>
                 <LoginForm handleLogin={handleLogin} />
               </Tab.Pane>
-              <Tab.Pane eventKey='signup'>
+              {/* <Tab.Pane eventKey='signup'>
                 <SignUpForm handleLogin={handleLogin} />
-              </Tab.Pane>
+              </Tab.Pane> */}
             </Tab.Content>
           </Modal.Body>
         </Tab.Container>

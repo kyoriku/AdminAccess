@@ -69,9 +69,10 @@ const Login = () => {
 
   return (
     <div className='login-container'>
-      <h2>Login</h2>
+      {/* <h2>Login</h2> */}
       <form className='form login-form' onSubmit={handleFormSubmit}>
-        <div className='mb-3'>
+        <div className='mb-3 text-start'>
+          <label htmlFor='email-login' className='form-label'>Email:</label>
           <input
             className='form-control'
             type='text'
@@ -83,7 +84,8 @@ const Login = () => {
           />
           {emailError && <div className='text-danger'>{emailError}</div>}
         </div>
-        <div className='mb-3'>
+        <div className='mb-3 text-start'>
+          <label htmlFor='password-login' className='form-label'>Password:</label>
           <input
             className='form-control'
             type='password'
@@ -95,7 +97,7 @@ const Login = () => {
           />
           {passwordError && <div className='text-danger'>{passwordError}</div>}
         </div>
-        <div className='mb-3'>
+        <div className='mb-1'>
           <button className='btn btn-dark' type='submit' disabled={submitting}>
             {submitting ? 'Logging in...' : 'Login'}
           </button>
