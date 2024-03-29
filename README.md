@@ -73,11 +73,12 @@ To get started with AdminAccess, follow these steps:
 
     - **Using MySQL Command Line:**
       - Log into MySQL and create the necessary database by executing the schema provided in the `db/schema.sql` file. Replace `<username>` with your MySQL username.
-      ```bash
-      mysql -u <username> -p
-      source db/schema.sql
-      quit 
-      ```
+      
+        ```bash
+        mysql -u <username> -p
+        source db/schema.sql
+        quit 
+        ```
 
 6. Seed the database.
     ```bash
@@ -124,4 +125,4 @@ If you have any questions, please do not hesitate to reach out: devkyoriku@gmail
 
 ---
 
-© 2024 "AdminAccess" by [Ozdal](ttps://github.com/ozdaldogru), [Austin](https://github.com/kyoriku), [Dan](https://github.com/dannadlerp), & [Justin](https://github.com/justinsta624). All Rights Reserved.
+© 2024 "AdminAccess" by [Ozdal](https://github.com/ozdaldogru), [Austin](https://github.com/kyoriku), [Dan](https://github.com/dannadlerp), & [Justin](https://github.com/justinsta624). All Rights Reserved.
