@@ -88,7 +88,7 @@ const UpdateDepartment = () => {
           />
         </div>
         <div className='mb-3 mt-3'>
-          <label className='form-label' htmlFor='name'>Department:</label>
+          <label className='form-label' htmlFor='name'>Department Name:</label>
           <input
             type='text'
             className='form-control'
