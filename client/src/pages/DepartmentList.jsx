@@ -119,7 +119,7 @@ function DepartmentList() {
     <div className='px-5 mt-3'>
       {/* Header */}
       <div className='d-flex justify-content-center'>
-        <h2>Departments List</h2>
+        <h2 className='m-0'>Departments List</h2>
       </div>
       {/* Add Department and Export Buttons */}
       <div className='d-flex justify-content-between'>
@@ -130,7 +130,7 @@ function DepartmentList() {
       <div className='mt-3 card'>
         <input
           type="text"
-          className='form-control'
+          className='form-control search'
           placeholder='Type to Search'
           onChange={Filter}
           id='searchInput'

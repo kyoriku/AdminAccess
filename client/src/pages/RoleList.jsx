@@ -117,7 +117,7 @@ function RoleList() {
   return (
     <div className='px-5 mt-3'>
       <div className='d-flex justify-content-center'>
-        <h2>Roles List</h2>
+        <h2 className='m-0'>Roles List</h2>
       </div>
       <div className='d-flex justify-content-between'>
         <Link to='add' className='btn btn-success'>Add Role</Link>
@@ -136,7 +136,7 @@ function RoleList() {
             <tr>
               <th>Role ID</th>
               <th>Role Title</th>
-              <th>Department</th>
+              <th>Department Name</th>
               <th>Action</th>
             </tr>
           </thead>
