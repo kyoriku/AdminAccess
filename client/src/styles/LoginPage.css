@@ -11,6 +11,12 @@
   border-radius: 15px;
 }
 
-.login-header {
-  margin: 0;
+.is-invalid {
+  border-color: #dc3545 ;
+}
+
+@media only screen and (max-width: 768px) {
+  .login-card {
+    width: 80vw;
+  }
 }

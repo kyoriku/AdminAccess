@@ -69,12 +69,12 @@ const Login = () => {
 
   return (
     <div className='login-container'>
-      {/* <h2>Login</h2> */}
+      <h2>Login</h2>
       <form className='form login-form' onSubmit={handleFormSubmit}>
-        <div className='mb-3 text-start'>
-          <label htmlFor='email-login' className='form-label'>Email:</label>
+        <div className={`mb-${emailError ? '0' : '4'}`}>
+          {/* <label htmlFor='email-login' className='form-label'>Email:</label> */}
           <input
-            className='form-control'
+            className={`form-control ${emailError ? 'is-invalid' : ''}`}
             type='text'
             id='email-login'
             placeholder='Email'
@@ -84,10 +84,10 @@ const Login = () => {
           />
           {emailError && <div className='text-danger'>{emailError}</div>}
         </div>
-        <div className='mb-3 text-start'>
-          <label htmlFor='password-login' className='form-label'>Password:</label>
+        <div className={`mb-${passwordError ? '0' : '4'}`}>
+          {/* <label htmlFor='password-login' className='form-label'>Password:</label> */}
           <input
-            className='form-control'
+            className={`form-control ${passwordError ? 'is-invalid' : ''}`}
             type='password'
             id='password-login'
             placeholder='Password'
@@ -97,7 +97,7 @@ const Login = () => {
           />
           {passwordError && <div className='text-danger'>{passwordError}</div>}
         </div>
-        <div className='mb-1'>
+        <div className=''>
           <button className='btn btn-dark' type='submit' disabled={submitting}>
             {submitting ? 'Logging in...' : 'Login'}
           </button>

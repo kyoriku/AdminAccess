@@ -15,7 +15,7 @@ const Signup = () => {
   const handleUsernameChange = (e) => {
     const newUsername = e.target.value;
     setUsername(newUsername);
-    setUsernameError(!newUsername ? 'Name is required' : '');
+    setUsernameError(!newUsername ? 'Username is required' : '');
   };
 
   const handleSignupEmailChange = (e) => {
@@ -46,7 +46,7 @@ const Signup = () => {
     e.preventDefault();
     setSubmitting(true);
 
-    setUsernameError(!username ? 'Name is required' : '');
+    setUsernameError(!username ? 'Username is required' : '');
     setSignupEmailError(!signupEmail ? 'Email is required' : !isValidEmail(signupEmail) ? 'Invalid email address' : '');
     setSignupPasswordError(!signupPassword ? 'Password is required' : '');
 
@@ -83,21 +83,21 @@ const Signup = () => {
     <div className='signup-container'>
       <h2 className=''>Sign Up</h2>
       <form className='form signup-form' onSubmit={handleSignupFormSubmit}>
-        <div className='mb-3'>
+        <div className={`mb-${usernameError ? '0' : '4'}`}>
           <input
-            className='form-control'
+            className={`form-control ${usernameError ? 'is-invalid' : ''}`}
             type='text'
             id='name-signup'
-            placeholder='Name'
+            placeholder='Username'
             value={username}
             onChange={handleUsernameChange}
             onBlur={handleUsernameChange}
           />
           {usernameError && <div className='text-danger'>{usernameError}</div>}
         </div>
-        <div className='mb-3'>
+        <div className={`mb-${signupEmailError ? '0' : '4'}`}>
           <input
-            className='form-control'
+            className={`form-control ${signupEmailError ? 'is-invalid' : ''}`}
             type='text'
             id='email-signup'
             placeholder='Email'
@@ -107,9 +107,9 @@ const Signup = () => {
           />
           {signupEmailError && <div className='text-danger'>{signupEmailError}</div>}
         </div>
-        <div className='mb-3'>
+        <div className={`mb-${signupPasswordError ? '0' : '4'}`}>
           <input
-            className='form-control'
+            className={`form-control ${signupPasswordError ? 'is-invalid' : ''}`}
             type='password'
             id='password-signup'
             placeholder='Password (minimum 8 characters)'
@@ -119,7 +119,7 @@ const Signup = () => {
           />
           {signupPasswordError && <div className='text-danger'>{signupPasswordError}</div>}
         </div>
-        <div className='mb-3'>
+        <div className=''>
           <button className='btn btn-dark' type='submit' disabled={submitting}>
             {submitting ? 'Signing Up...' : 'Sign Up'}
           </button>
