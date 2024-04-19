@@ -126,7 +126,7 @@ const Signup = () => {
         </div>
       </form>
       {signupSubmitStatus && (
-        <div className={`mt-3 alert ${signupSubmitStatus.includes('successful') ? 'alert-success' : 'alert-danger'}`}>
+        <div className={`mt-3 mb-0 alert ${signupSubmitStatus.includes('successful') ? 'alert-success' : 'alert-danger'}`}>
           {signupSubmitStatus}
         </div>
       )}

@@ -104,7 +104,7 @@ const Login = () => {
         </div>
       </form>
       {submitStatus && (
-        <div className={`mt-3 alert ${submitStatus.includes('successful') ? 'alert-success' : 'alert-danger'}`}>
+        <div className={`mt-3 mb-0 alert ${submitStatus.includes('successful') ? 'alert-success' : 'alert-danger'}`}>
           {submitStatus}
         </div>
       )}
