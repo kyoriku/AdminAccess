@@ -71,26 +71,26 @@ const Login = () => {
     <div className='login-container'>
       <h2>Login</h2>
       <form className='form login-form' onSubmit={handleFormSubmit}>
-        <div className={`mb-${emailError ? '0' : '4'}`}>
-          {/* <label htmlFor='email-login' className='form-label'>Email:</label> */}
+        <div className={`text-start mb-${emailError ? '0' : '4'}`}>
+          <label htmlFor='email-login' className='form-label'>Email:</label>
           <input
             className={`form-control ${emailError ? 'is-invalid' : ''}`}
             type='text'
             id='email-login'
-            placeholder='Email'
+            placeholder='Enter Email'
             value={email}
             onChange={handleEmailChange}
             onBlur={handleInvalidEmail}
           />
           {emailError && <div className='text-danger'>{emailError}</div>}
         </div>
-        <div className={`mb-${passwordError ? '0' : '4'}`}>
-          {/* <label htmlFor='password-login' className='form-label'>Password:</label> */}
+        <div className={`text-start mb-${passwordError ? '0' : '4'}`}>
+          <label htmlFor='password-login' className='form-label'>Password:</label>
           <input
             className={`form-control ${passwordError ? 'is-invalid' : ''}`}
             type='password'
             id='password-login'
-            placeholder='Password'
+            placeholder='Enter Password'
             value={password}
             onChange={handlePasswordChange}
             onBlur={handlePasswordChange}
