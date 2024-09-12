@@ -9,8 +9,7 @@ const LoginPage = () => {
         {/* <h2 className="login-header">Login</h2>
         <hr /> */}
         <LoginForm />
-        <hr className=''/>
-        <SignupForm />
+        {/* <SignupForm /> */}
       </div>
     </div>
   );
