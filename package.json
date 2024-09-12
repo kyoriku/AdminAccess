@@ -1,7 +1,7 @@
 {
-  "name": "HR-Module",
+  "name": "adminaccess",
   "version": "1.0.0",
-  "description": "<a ID=\"readme-top\"></a>",
+  "description": "Admin Access",
   "main": "server/server.js",
   "scripts": {
     "install": "cd server && npm i && cd ../client && npm i",
@@ -16,16 +16,5 @@
   "license": "ISC",
   "devDependencies": {
     "concurrently": "^8.2.2"
-  },
-  "dependencies": {
-    "vite": "^5.1.6"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ozdaldogru/HR-Module.git"
-  },
-  "bugs": {
-    "url": "https://github.com/ozdaldogru/HR-Module/issues"
-  },
-  "homepage": "https://github.com/ozdaldogru/HR-Module#readme"
+  }
 }
