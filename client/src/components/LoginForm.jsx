@@ -48,6 +48,7 @@ const Login = () => {
           if (user && Object.keys(user).length !== 0) {
             setSubmitStatus('Login successful');
             Auth.login(user); // Pass the user object to the Auth service
+            window.location.reload();
           } else {
             setSubmitStatus('User data is invalid');
           }
@@ -69,7 +70,7 @@ const Login = () => {
 
   return (
     <div className='login-container'>
-      <h2>Login</h2>
+      {/* <h2>Login</h2> */}
       <form className='form login-form' onSubmit={handleFormSubmit}>
         <div className={`text-start mb-${emailError ? '0' : '4'}`}>
           <label htmlFor='email-login' className='form-label'>Email:</label>
@@ -98,7 +99,7 @@ const Login = () => {
           {passwordError && <div className='text-danger'>{passwordError}</div>}
         </div>
         <div className=''>
-          <button className='btn btn-dark' type='submit' disabled={submitting}>
+          <button className='btn btn-primary' type='submit' disabled={submitting}>
             {submitting ? 'Logging in...' : 'Login'}
           </button>
         </div>

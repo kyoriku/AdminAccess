@@ -1,29 +1,24 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { CSVLink } from "react-csv";
 import axios from 'axios';
 import Auth from '../utils/auth';
-import withAuth from '../components/Auth';
 import DeleteModal from '../components/DeleteModal';
-import { CSVLink } from "react-csv";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 function EmployeeList() {
   const [employees, setEmployees] = useState([]);
   const [records, setRecords] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  // Check if user is logged in before rendering the component and fetch the list of employees
   useEffect(() => {
-    if (!Auth.loggedIn()) {
-      navigate('/');
-      return;
-    }
     getAllEmployees();
-  }, [navigate]);
+  }, []);
 
-  // Define a function to fetch all employees from the API
   const getAllEmployees = async () => {
     try {
       const response = await axios.get('/api/employees');
@@ -31,78 +26,85 @@ function EmployeeList() {
       setRecords(response.data);
       setIsLoading(false);
     } catch (error) {
-      console.error('Error fetching employees:', error);
+      console.error('Error fetching all employees:', error);
       setIsLoading(false);
     }
   };
 
-  // Define a function to delete an employee
-  const deleteEmployee = async () => {
-    try {
-      await axios.delete(`/api/employees/${deleteId}`);
-      setEmployees(employees.filter(employee => employee.id !== deleteId));
-    } catch (error) {
-      console.error('Error deleting employee:', error);
-    }
-  };
-
-  // Define a function to filter the employees based on the search input
   const Filter = (event) => {
     setEmployees(records.filter(employee =>
-      employee.first_name.toLowerCase().includes(event.target.value) ||
-      employee.last_name.toLowerCase().includes(event.target.value) ||
-      employee.email.toLowerCase().includes(event.target.value) ||
-      employee.role.title.toLowerCase().includes(event.target.value)
-    ))
+      employee.first_name.toLowerCase().includes(event.target.value.toLowerCase()) ||
+      employee.last_name.toLowerCase().includes(event.target.value.toLowerCase()) ||
+      employee.email.toLowerCase().includes(event.target.value.toLowerCase()) ||
+      employee.role.title.toLowerCase().includes(event.target.value.toLowerCase())
+    ));
   };
 
-  // Define a function to confirm the delete operation
-  const confirmDelete = () => {
+  const deleteEmployee = async (deleteId) => {
     try {
-      deleteEmployee(deleteId);
-      setShowModal(false);
-    }
-    catch (error) {
-      console.error('Error during delete operation:', error);
+      await axios.delete(`/api/employees/${deleteId}`);
+      setEmployees(employees => employees.filter(employee => employee.id !== deleteId));
+      setShowDeleteModal(false);
+    } catch (error) {
+      console.error('Error deleting employee:', error);
+      setErrorMessage('Error deleting employee. Please try again.');
     }
   };
 
-  // Define a function to handle the delete operation
-  const handleDelete = (id) => {
-    setDeleteId(id);
-    setShowModal(true);
+  const handleAction = (action, id = null) => {
+    if (!Auth.loggedIn()) {
+      // Trigger the login modal in the navbar
+      const loginLink = document.querySelector('button.btn.btn-outline-primary');
+      if (loginLink) {
+        loginLink.click();
+      } else {
+        console.error('Login link not found');
+        // Fallback: redirect to login page
+        navigate('/login');
+      }
+      return;
+    }
+
+    if (action === 'add') {
+      navigate('/employees/add');
+    } else if (action === 'edit' && id) {
+      navigate(`/employees/${id}`);
+    } else if (action === 'delete' && id) {
+      setDeleteId(id);
+      setShowDeleteModal(true);
+    }
   };
 
-  // Define a function to cancel the delete operation
+  const confirmDelete = async () => {
+    await deleteEmployee(deleteId);
+  };
+
   const cancelDelete = () => {
-    setShowModal(false);
+    setShowDeleteModal(false);
+    setErrorMessage('');
   };
 
-  // If the data is still loading, display a loading message
   if (isLoading) {
-    return <h3 className='text-center m-3'>Loading...</h3>;
+    return <LoadingSpinner />;
   }
 
-  // Return the list of employees in a table format with edit and delete buttons for each employee
   return (
-    <div className='px-5 mt-3'>
-      <div className='d-flex justify-content-center'>
-        <h2 className='m-0'>Employee List</h2>
-      </div>
+    <div className='px-3 mt-3 mb-5'>
       <div className='d-flex justify-content-between'>
-        <Link to='add' className='btn btn-success'>Add Employee</Link>
+        <button onClick={() => handleAction('add')} className='btn btn-success'>Add Employee</button>
+        <h2 className='m-0'>Employees</h2>
         <CSVLink className='btn btn-dark' data={employees}>Export To CSV</CSVLink>
       </div>
       <div className='mt-3 card'>
         <input
           type="text"
-          id='searchInput'
-          className='form-control'
+          className='form-control search'
           placeholder='Type to Search'
           onChange={Filter}
+          id='searchInput'
         />
         <table className='table table-bordered table-hover'>
-          <thead className='thead table-dark'>
+          <thead className='thead table-primary'>
             <tr>
               <th>Employee ID</th>
               <th>First Name</th>
@@ -116,7 +118,7 @@ function EmployeeList() {
           <tbody>
             {employees.length === 0 ? (
               <tr>
-                <td colSpan='7'>No employees found</td>
+                <td colSpan="7">No employees found.</td>
               </tr>
             ) : (
               employees.map((employee) => (
@@ -128,8 +130,8 @@ function EmployeeList() {
                   <td>{employee.role.title}</td>
                   <td>{employee.salary}</td>
                   <td>
-                    <Link to={`/employees/${employee.id}`} className='btn btn-info btn-sm me-2'>Edit</Link>
-                    <button className='btn btn-warning btn-sm' onClick={() => handleDelete(employee.id)}>Delete</button>
+                    <button onClick={() => handleAction('edit', employee.id)} className='btn btn-info btn-sm me-2'>Edit</button>
+                    <button onClick={() => handleAction('delete', employee.id)} className='btn btn-warning btn-sm'>Delete</button>
                   </td>
                 </tr>
               ))
@@ -138,18 +140,17 @@ function EmployeeList() {
         </table>
       </div>
       <DeleteModal
-        showModal={showModal}
+        showModal={showDeleteModal}
+        setShowModal={setShowDeleteModal}
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
         cancelDelete={cancelDelete}
         confirmDelete={confirmDelete}
-        entityType="employees"
-        entityNameToDelete={
-          deleteId && employees.find(employee => employee.id === deleteId)
-            ? `${employees.find(employee => employee.id === deleteId).first_name} ${employees.find(employee => employee.id === deleteId).last_name}`
-            : ""
-        }
+        entityType='employees'
+        entityNameToDelete={employees.find(employee => employee.id === deleteId)?.first_name + ' ' + employees.find(employee => employee.id === deleteId)?.last_name}
       />
     </div>
   );
 }
 
-export default withAuth(EmployeeList);
+export default EmployeeList;

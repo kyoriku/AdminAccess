@@ -1,3 +1,6 @@
+import React from 'react';
+import { Modal, Button, Alert } from 'react-bootstrap';
+
 const DeleteModal = ({ showModal, cancelDelete, confirmDelete, entityType, errorMessage, entityNameToDelete }) => {
   let entityName;
   switch (entityType) {
@@ -18,37 +21,37 @@ const DeleteModal = ({ showModal, cancelDelete, confirmDelete, entityType, error
   }
 
   return (
-    <div className="modal" style={{ display: showModal ? 'block' : 'none' }}>
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Confirm Delete</h5>
-            <button type="button" className="btn-close" onClick={cancelDelete}></button>
+    <Modal show={showModal} onHide={cancelDelete}>
+      <Modal.Header closeButton>
+        <Modal.Title>Confirm Delete</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        {errorMessage && <Alert variant="danger" className='mb-0'>{errorMessage}</Alert>}
+        {!errorMessage && (
+          <div>
+            <p>Are you sure you want to delete the following {entityName}?</p>
+            <ul className='mb-0'>
+              {Array.isArray(entityNameToDelete) ? (
+                entityNameToDelete.map((item, index) => (
+                  <li key={index}>{item}</li>
+                ))
+              ) : (
+                <li>{entityNameToDelete}</li>
+              )}
+            </ul>
           </div>
-          <div className="modal-body">
-            {errorMessage && <div className="alert alert-danger">{errorMessage}</div>}
-            {!errorMessage && (
-              <div>
-                <p>Are you sure you want to delete the following {entityName}?</p>
-                <ul>
-                  {Array.isArray(entityNameToDelete) ? (
-                    entityNameToDelete.map((item, index) => (
-                      <li key={index}>{item}</li>
-                    ))
-                  ) : (
-                    <li>{entityNameToDelete}</li>
-                  )}
-                </ul>
-              </div>
-            )}
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={cancelDelete}>Cancel</button>
-            <button type="button" className="btn btn-danger" onClick={confirmDelete} disabled={errorMessage && errorMessage.props.children[1].props.children.length > 0}>Delete</button>
-          </div>
-        </div>
-      </div>
-    </div>
+        )}
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={cancelDelete}>Cancel</Button>
+        <Button 
+          variant="danger" 
+          onClick={confirmDelete} 
+          disabled={errorMessage && errorMessage.props.children[1].props.children.length > 0}>
+          Delete
+        </Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

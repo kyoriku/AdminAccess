@@ -23,9 +23,7 @@ login(user) {
 
   // Save user to session storage
   sessionStorage.setItem('user', JSON.stringify(user));
-  window.location.assign('/departments');
 }
-
 
   // logout user
   logout() {

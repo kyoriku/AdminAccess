@@ -1,3 +1,6 @@
+import React from 'react';
+import { Modal, Button, Alert } from 'react-bootstrap';
+
 const ErrorModal = ({ errorMessage, closeModal, entityType, entityAction }) => {
   let entityTypeName;
   switch (entityType) {
@@ -29,28 +32,30 @@ const ErrorModal = ({ errorMessage, closeModal, entityType, entityAction }) => {
       entityActionMessage = 'modifying';
   }
 
+  // Create a user-friendly error message
+  const userFriendlyMessage = (() => {
+    if (errorMessage.includes('404')) {
+      return `It looks like there were no changes made while trying to edit the ${entityTypeName}. Please modify the information before saving.`;
+    } else if (errorMessage.includes('400')) {
+      return `Please fill out all required fields before ${entityActionMessage} the ${entityTypeName}.`;
+    }
+    return `An error occurred while ${entityActionMessage} the ${entityTypeName}. Please try again later.`;
+  })();
+
   return (
-    <div className="modal" style={{ display: errorMessage ? 'block' : 'none' }}>
-      <div className="modal-dialog">
-        <div className="modal-content">
-          <div className="modal-header">
-            <h5 className="modal-title">Error</h5>
-            <button type="button" className="btn-close" onClick={closeModal}></button>
-          </div>
-          <div className="modal-body">
-            <div className="alert alert-danger">
-              <p>Error occurred while {entityActionMessage} {entityTypeName}:</p>
-              <ul>
-                <li>{errorMessage}</li>
-              </ul>
-            </div>
-          </div>
-          <div className="modal-footer">
-            <button type="button" className="btn btn-secondary" onClick={closeModal}>Close</button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Modal show={!!errorMessage} onHide={closeModal}>
+      <Modal.Header closeButton>
+        <Modal.Title>Error</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Alert variant="danger" className="mb-0">
+          <p className="mb-0">{userFriendlyMessage}</p>
+        </Alert>
+      </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={closeModal}>Close</Button>
+      </Modal.Footer>
+    </Modal>
   );
 };
 

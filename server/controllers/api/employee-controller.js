@@ -3,7 +3,7 @@ const { Employee, Role, Department } = require('../../models'); // Import the Em
 const withAuth = require('../../utils/auth'); // Import the withAuth middleware
 
 // GET all employees
-router.get('/', withAuth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const employeeData = await Employee.findAll(
       {

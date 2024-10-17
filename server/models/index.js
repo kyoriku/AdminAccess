@@ -40,14 +40,6 @@ User.hasMany(Department, {
   foreignKey: "user_id",
 });
 
-Role.belongsTo(Department, {
-  foreignKey: "department_id",
-});
-
-Role.hasMany(Employee, {
-  foreignKey: "role_id",
-});
-
 Department.hasMany(Manager, {
   foreignKey: "department_id",
 });

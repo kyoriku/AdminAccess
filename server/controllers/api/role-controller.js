@@ -3,7 +3,7 @@ const { Role, Employee, Department } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // GET all roles
-router.get('/', withAuth, async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const roleData = await Role.findAll(
       {

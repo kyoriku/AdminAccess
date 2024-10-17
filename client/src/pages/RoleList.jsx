@@ -1,31 +1,24 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { CSVLink } from "react-csv";
 import axios from 'axios';
 import Auth from '../utils/auth';
-import withAuth from '../components/Auth';
 import DeleteModal from '../components/DeleteModal';
+import LoadingSpinner from '../components/LoadingSpinner';
 
-// Define the RoleList component to display the list of roles
 function RoleList() {
   const [roles, setRoles] = useState([]);
   const [records, setRecords] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  // Fetch the list of roles from the API
   useEffect(() => {
-    if (!Auth.loggedIn()) {
-      navigate('/');
-      return;
-    }
     getAllRoles();
-  }, [navigate]);
+  }, []);
 
-  // Define a function to fetch all roles from the API
   const getAllRoles = async () => {
     try {
       const response = await axios.get('/api/roles');
@@ -38,15 +31,13 @@ function RoleList() {
     }
   };
 
-  // Define a function to filter the roles based on the search input
   const Filter = (event) => {
     setRoles(records.filter(role =>
-      role.title.toLowerCase().includes(event.target.value) ||
-      role.department.name.toLowerCase().includes(event.target.value)
-    ))
+      role.title.toLowerCase().includes(event.target.value.toLowerCase()) ||
+      role.department.name.toLowerCase().includes(event.target.value.toLowerCase())
+    ));
   };
 
-  // Define a function to fetch a single role by ID
   const getSingleRole = async (roleId) => {
     try {
       const response = await axios.get(`/api/roles/${roleId}`);
@@ -57,35 +48,54 @@ function RoleList() {
     }
   };
 
-  // Define a function to delete a role by ID
   const deleteRole = async (deleteId) => {
     try {
       await axios.delete(`/api/roles/${deleteId}`);
       setRoles(roles => roles.filter(role => role.id !== deleteId));
-      setShowModal(false);
+      setShowDeleteModal(false);
     } catch (error) {
       console.error('Error deleting role:', error);
       setErrorMessage('Failed to delete role. Please try again later.');
     }
   };
 
-  // Define a function to handle the delete operation
-  const handleDelete = (id) => {
-    setDeleteId(id);
-    setShowModal(true);
+  const handleAction = (action, id = null) => {
+    if (!Auth.loggedIn()) {
+      const loginLink = document.querySelector('button.btn.btn-outline-primary');
+      if (loginLink) {
+        loginLink.click();
+      } else {
+        console.error('Login link not found');
+        navigate('/login');
+      }
+      return;
+    }
+
+    if (action === 'add') {
+      navigate('/roles/add');
+    } else if (action === 'edit' && id) {
+      navigate(`/roles/${id}`);
+    } else if (action === 'delete' && id) {
+      setDeleteId(id);
+      setShowDeleteModal(true);
+    }
   };
 
-  // Define a function to confirm the delete operation
   const confirmDelete = async () => {
     try {
       const role = await getSingleRole(deleteId);
       const associatedEmployees = role.employees.map(employee => `${employee.first_name} ${employee.last_name}`);
+      
       if (associatedEmployees.length > 0) {
-        setShowModal(true);
+        setShowDeleteModal(true);
+        
+        // Determine the correct pluralization of "employee"
+        const employeeText = associatedEmployees.length === 1 ? 'employee' : 'employees';
+  
         setErrorMessage(
           <div>
-            <p>{`Cannot delete ${role.title} role. Please remove associated employee(s) first:`}</p>
-            <ul>
+            <p>{`Cannot delete ${role.title} role. Please reassign or remove any associated ${employeeText} first:`}</p>
+            <ul className='mb-0'>
               {associatedEmployees.map((employee, index) => (
                 <li key={index}>{employee}</li>
               ))}
@@ -97,42 +107,37 @@ function RoleList() {
       }
     } catch (error) {
       console.error('Error during delete operation:', error);
-      setShowModal(true);
+      setShowDeleteModal(true);
       setErrorMessage('Failed to fetch role details. Please try again later.');
     }
-  };
+  };  
 
-  // Define a function to cancel the delete operation
   const cancelDelete = () => {
-    setShowModal(false);
+    setShowDeleteModal(false);
     setErrorMessage('');
   };
 
-  // If the data is still loading, display a loading message
   if (isLoading) {
-    return <h3 className='text-center m-3'>Loading...</h3>;
+    return <LoadingSpinner />;
   }
 
-  // Render the list of roles in a table format with edit and delete buttons for each role
   return (
-    <div className='px-5 mt-3'>
-      <div className='d-flex justify-content-center'>
-        <h2 className='m-0'>Roles List</h2>
-      </div>
+    <div className='px-3 mt-3 mb-5'>
       <div className='d-flex justify-content-between'>
-        <Link to='add' className='btn btn-success'>Add Role</Link>
+        <button onClick={() => handleAction('add')} className='btn btn-success'>Add Role</button>
+        <h2 className='m-0'>Roles</h2>
         <CSVLink className='btn btn-dark' data={roles}>Export To CSV</CSVLink>
       </div>
       <div className='mt-3 card'>
         <input
           type="text"
-          className='form-control'
+          className='form-control search'
           placeholder='Type to Search'
           onChange={Filter}
           id='searchInput'
         />
         <table className='table table-bordered table-hover'>
-          <thead className='thead table-dark'>
+          <thead className='thead table-primary'>
             <tr>
               <th>Role ID</th>
               <th>Role Title</th>
@@ -152,8 +157,8 @@ function RoleList() {
                   <td>{role.title}</td>
                   <td>{role.department.name}</td>
                   <td>
-                    <Link to={`/roles/${role.id}`} className='btn btn-info btn-sm me-2'>Edit</Link>
-                    <button className='btn btn-warning btn-sm' onClick={() => handleDelete(role.id)}>Delete</button>
+                    <button onClick={() => handleAction('edit', role.id)} className='btn btn-info btn-sm me-2'>Edit</button>
+                    <button onClick={() => handleAction('delete', role.id)} className='btn btn-warning btn-sm'>Delete</button>
                   </td>
                 </tr>
               ))
@@ -162,8 +167,8 @@ function RoleList() {
         </table>
       </div>
       <DeleteModal
-        showModal={showModal}
-        setShowModal={setShowModal}
+        showModal={showDeleteModal}
+        setShowModal={setShowDeleteModal}
         errorMessage={errorMessage}
         setErrorMessage={setErrorMessage}
         cancelDelete={cancelDelete}
@@ -171,8 +176,8 @@ function RoleList() {
         entityType='roles'
         entityNameToDelete={roles.find(role => role.id === deleteId)?.title}
       />
-    </div >
+    </div>
   );
 }
 
-export default withAuth(RoleList);
+export default RoleList;

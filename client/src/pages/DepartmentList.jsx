@@ -1,35 +1,24 @@
-// importing necessary modules and components
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { CSVLink } from "react-csv";
 import axios from 'axios';
 import Auth from '../utils/auth';
-import withAuth from '../components/Auth';
 import DeleteModal from '../components/DeleteModal';
+import LoadingSpinner from '../components/LoadingSpinner';
 
-// Define the DepartmentList component to display the list of departments
 function DepartmentList() {
-  // Define state variables using useState hook
   const [departments, setDepartments] = useState([]);
   const [records, setRecords] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
-  // Fetch the list of departments from the API
   useEffect(() => {
-    // Check if user is logged in before fetching departments
-    if (!Auth.loggedIn()) {
-      // If user is not logged in, redirect to login page
-      navigate('/');
-      return;
-    }
     getAllDepartments();
-  }, [navigate]);
+  }, []);
 
-  // Define a function to fetch all departments from the API
   const getAllDepartments = async () => {
     try {
       const response = await axios.get('/api/departments');
@@ -42,14 +31,12 @@ function DepartmentList() {
     }
   };
 
-  // Define a function to filter the departments based on the search input
   const Filter = (event) => {
     setDepartments(records.filter(department =>
-      department.name.toLowerCase().includes(event.target.value)
-    ))
+      department.name.toLowerCase().includes(event.target.value.toLowerCase())
+    ));
   };
 
-  // Define a function to fetch a single department by ID
   const getSingleDepartment = async (deleteId) => {
     try {
       const response = await axios.get(`/api/departments/${deleteId}`);
@@ -59,34 +46,55 @@ function DepartmentList() {
     }
   };
 
-  // Define a function to delete a department
   const deleteDepartment = async (deleteId) => {
     try {
       await axios.delete(`/api/departments/${deleteId}`);
       setDepartments(departments => departments.filter(department => department.id !== deleteId));
-      setShowModal(false);
+      setShowDeleteModal(false);
     } catch (error) {
       console.error('Error deleting department:', error);
     }
   };
 
-  // Define the handleDelete function to show the modal
-  const handleDelete = (id) => {
-    setDeleteId(id);
-    setShowModal(true)
+  const handleAction = (action, id = null) => {
+    if (!Auth.loggedIn()) {
+      // Trigger the login modal in the navbar
+      const loginLink = document.querySelector('button.btn.btn-outline-primary');
+      if (loginLink) {
+        loginLink.click();
+      } else {
+        console.error('Login link not found');
+        // Might want to add a fallback here, such as redirecting to the login page
+        // navigate('/login');
+      }
+      return;
+    }
+
+    if (action === 'add') {
+      navigate('/departments/add');
+    } else if (action === 'edit' && id) {
+      navigate(`/departments/${id}`);
+    } else if (action === 'delete' && id) {
+      setDeleteId(id);
+      setShowDeleteModal(true);
+    }
   };
 
-  // Define the confirmDelete function to delete the department
   const confirmDelete = async () => {
     try {
       const department = await getSingleDepartment(deleteId);
       const associatedRoles = department.roles.map(role => role.title);
+
       if (associatedRoles.length > 0) {
-        setShowModal(true);
+        setShowDeleteModal(true);
+
+        // Determine the correct pluralization of "role"
+        const roleText = associatedRoles.length === 1 ? 'role' : 'roles';
+
         setErrorMessage(
           <div>
-            <p>{`Cannot delete ${department.name} department. Please remove associated role(s) first:`}</p>
-            <ul>
+            <p>{`Cannot delete ${department.name} department. Please reassign or remove any associated ${roleText} first:`}</p>
+            <ul className='mb-0'>
               {associatedRoles.map((role, index) => (
                 <li key={index}>{role}</li>
               ))}
@@ -98,35 +106,30 @@ function DepartmentList() {
       }
     } catch (error) {
       console.error('Error during delete operation:', error);
-      setShowModal(true);
+      setShowDeleteModal(true);
       setErrorMessage(error.message);
     }
   };
 
-  // Define the cancelDelete function to close the modal
   const cancelDelete = () => {
-    setShowModal(false);
+    setShowDeleteModal(false);
     setErrorMessage('');
   };
 
-  // If the data is still loading, display a loading message
   if (isLoading) {
-    return <h3 className='text-center m-3'>Loading...</h3>;
+    return <LoadingSpinner />;
   }
 
-  // Render the list of departments in a table format with edit and delete buttons for each department
   return (
-    <div className='px-5 mt-3'>
-      {/* Header */}
-      <div className='d-flex justify-content-center'>
-        <h2 className='m-0'>Departments List</h2>
-      </div>
-      {/* Add Department and Export Buttons */}
+    <div className='px-3 mt-3 mb-5'>
+      {/* <div className='d-flex justify-content-center'>
+        <h2 className='m-0'>Departments</h2>
+      </div> */}
       <div className='d-flex justify-content-between'>
-        <Link to='add' className='btn btn-success'> Add Department</Link>
-        <CSVLink className='btn btn-dark' data={departments} >Export To CSV</CSVLink>
+        <button onClick={() => handleAction('add')} className='btn btn-success'>Add Department</button>
+        <h2 className='m-0'>Departments</h2>
+        <CSVLink className='btn btn-dark' data={departments}>Export To CSV</CSVLink>
       </div>
-      {/* Search Input */}
       <div className='mt-3 card'>
         <input
           type="text"
@@ -135,33 +138,27 @@ function DepartmentList() {
           onChange={Filter}
           id='searchInput'
         />
-        {/* Department Table */}
         <table className='table table-bordered table-hover'>
-          {/* Table Header */}
-          <thead className='thead table-dark'>
+          <thead className='thead table-primary'>
             <tr>
               <th>Department ID</th>
               <th>Department Name</th>
               <th>Action</th>
             </tr>
           </thead>
-          {/* Table Body */}
           <tbody>
-            {/* Check if departments exist, if not display a message */}
             {departments.length === 0 ? (
               <tr>
                 <td colSpan="3">No departments found.</td>
               </tr>
             ) : (
-              // Map through departments and render each department
               departments.map((department) => (
                 <tr key={department.id}>
                   <td>{department.id}</td>
                   <td>{department.name}</td>
                   <td>
-                    {/* Edit and Delete Buttons */}
-                    <Link to={`/departments/` + department.id} className='btn btn-info btn-sm me-2'>Edit</Link>
-                    <button className='btn btn-warning btn-sm' onClick={() => handleDelete(department.id)}>Delete</button>
+                    <button onClick={() => handleAction('edit', department.id)} className='btn btn-info btn-sm me-2'>Edit</button>
+                    <button onClick={() => handleAction('delete', department.id)} className='btn btn-warning btn-sm'>Delete</button>
                   </td>
                 </tr>
               ))
@@ -169,10 +166,9 @@ function DepartmentList() {
           </tbody>
         </table>
       </div>
-      {/* Delete Modal */}
       <DeleteModal
-        showModal={showModal}
-        setShowModal={setShowModal}
+        showModal={showDeleteModal}
+        setShowModal={setShowDeleteModal}
         errorMessage={errorMessage}
         setErrorMessage={setErrorMessage}
         cancelDelete={cancelDelete}
@@ -184,5 +180,4 @@ function DepartmentList() {
   );
 }
 
-// Wrap the DepartmentList component with the withAuth HOC for authentication
-export default withAuth(DepartmentList);
+export default DepartmentList;
