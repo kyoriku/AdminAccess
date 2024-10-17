@@ -3,7 +3,7 @@ const { Manager, Role, Employee } = require("../../models");
 const withAuth = require("../../utils/auth");
 
 // GET all managers
-router.get("/", withAuth, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const managerData = await Manager.findAll(
       {

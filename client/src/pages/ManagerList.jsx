@@ -1,26 +1,23 @@
-import { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CSVLink } from "react-csv";
 import axios from 'axios';
 import Auth from '../utils/auth';
-import withAuth from '../components/Auth';
 import DeleteModal from '../components/DeleteModal';
-import { CSVLink } from "react-csv";
+import LoadingSpinner from '../components/LoadingSpinner';
 
 function ManagerList() {
   const [managers, setManagers] = useState([]);
   const [records, setRecords] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [showModal, setShowModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!Auth.loggedIn()) {
-      navigate('/');
-      return;
-    }
     getAllManagers();
-  }, [navigate]);
+  }, []);
 
   const getAllManagers = async () => {
     try {
@@ -34,65 +31,78 @@ function ManagerList() {
     }
   };
 
-  const deleteManager = async () => {
-    try {
-      await axios.delete(`/api/managers/${deleteId}`);
-      setManagers(managers.filter(manager => manager.id !== deleteId));
-    } catch (error) {
-      console.error('Error deleting manager:', error);
-    }
-  };
-
   const Filter = (event) => {
     setManagers(records.filter(manager =>
-      manager.first_name.toLowerCase().includes(event.target.value) ||
-      manager.last_name.toLowerCase().includes(event.target.value) ||
-      manager.email.toLowerCase().includes(event.target.value) ||
-      manager.role.title.toLowerCase().includes(event.target.value)
-    ))
+      manager.first_name.toLowerCase().includes(event.target.value.toLowerCase()) ||
+      manager.last_name.toLowerCase().includes(event.target.value.toLowerCase()) ||
+      manager.email.toLowerCase().includes(event.target.value.toLowerCase()) ||
+      manager.role.title.toLowerCase().includes(event.target.value.toLowerCase())
+    ));
   };
 
-  const confirmDelete = () => {
+  const deleteManager = async (deleteId) => {
     try {
-      deleteManager();
-      setShowModal(false);
+      await axios.delete(`/api/managers/${deleteId}`);
+      setManagers(managers => managers.filter(manager => manager.id !== deleteId));
+      setShowDeleteModal(false);
     } catch (error) {
       console.error('Error deleting manager:', error);
+      setErrorMessage('Failed to delete manager. Please try again later.');
     }
   };
 
-  const handleDelete = (id) => {
-    setDeleteId(id);
-    setShowModal(true);
+  const handleAction = (action, id = null) => {
+    if (!Auth.loggedIn()) {
+      const loginLink = document.querySelector('button.btn.btn-outline-primary');
+      if (loginLink) {
+        loginLink.click();
+      } else {
+        console.error('Login link not found');
+        navigate('/login');
+      }
+      return;
+    }
+
+    if (action === 'add') {
+      navigate('/managers/add');
+    } else if (action === 'edit' && id) {
+      navigate(`/managers/${id}`);
+    } else if (action === 'delete' && id) {
+      setDeleteId(id);
+      setShowDeleteModal(true);
+    }
+  };
+
+  const confirmDelete = async () => {
+    await deleteManager(deleteId);
   };
 
   const cancelDelete = () => {
-    setShowModal(false);
+    setShowDeleteModal(false);
+    setErrorMessage('');
   };
 
   if (isLoading) {
-    return <h3 className='text-center m-3'>Loading...</h3>;
+    return <LoadingSpinner />;
   }
 
   return (
-    <div className='px-5 mt-3'>
-      <div className='d-flex justify-content-center'>
-        <h2 className='m-0'>Manager List</h2>
-      </div>
+    <div className='px-3 mt-3 mb-5'>
       <div className='d-flex justify-content-between'>
-        <Link to='add' className='btn btn-success'>Add Manager</Link>
+        <button onClick={() => handleAction('add')} className='btn btn-success'>Add Manager</button>
+        <h2 className='m-0'>Managers</h2>
         <CSVLink className='btn btn-dark' data={managers}>Export To CSV</CSVLink>
       </div>
       <div className='mt-3 card'>
         <input
           type="text"
-          id='searchInput'
-          className='form-control'
+          className='form-control search'
           placeholder='Type to Search'
           onChange={Filter}
+          id='searchInput'
         />
         <table className='table table-bordered table-hover'>
-          <thead className='thead table-dark'>
+          <thead className='thead table-primary'>
             <tr>
               <th>Manager ID</th>
               <th>First Name</th>
@@ -116,8 +126,8 @@ function ManagerList() {
                   <td>{manager.email}</td>
                   <td>{manager.role.title}</td>
                   <td>
-                    <Link to={`/managers/${manager.id}`} className='btn btn-info btn-sm me-2'>Edit</Link>
-                    <button className='btn btn-warning btn-sm' onClick={() => handleDelete(manager.id)}>Delete</button>
+                    <button onClick={() => handleAction('edit', manager.id)} className='btn btn-info btn-sm me-2'>Edit</button>
+                    <button onClick={() => handleAction('delete', manager.id)} className='btn btn-warning btn-sm'>Delete</button>
                   </td>
                 </tr>
               ))
@@ -126,18 +136,17 @@ function ManagerList() {
         </table>
       </div>
       <DeleteModal
-        showModal={showModal}
+        showModal={showDeleteModal}
+        setShowModal={setShowDeleteModal}
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
         cancelDelete={cancelDelete}
         confirmDelete={confirmDelete}
-        entityType="managers"
-        entityNameToDelete={
-          deleteId && managers.find(manager => manager.id === deleteId)
-            ? `${managers.find(manager => manager.id === deleteId).first_name} ${managers.find(manager => manager.id === deleteId).last_name}`
-            : ""
-        }
+        entityType='managers'
+        entityNameToDelete={`${managers.find(manager => manager.id === deleteId)?.first_name} ${managers.find(manager => manager.id === deleteId)?.last_name}`}
       />
     </div>
   );
 }
 
-export default withAuth(ManagerList);
+export default ManagerList;

@@ -3,7 +3,7 @@ const { Department, Role, Employee } = require("../../models");
 const withAuth = require("../../utils/auth");
 
 // GET all department data
-router.get("/", withAuth, async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const departmentData = await Department.findAll({
       include: [

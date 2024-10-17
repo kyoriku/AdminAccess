@@ -3,7 +3,7 @@
 }
 
 .navbar-nav a ~ a {
-  border-left: 1px solid rgba(255, 255, 255, 0.3); /* Add border between list items */
+  border-left: 1px solid rgba(0, 0, 0, 0.3); /* Add border between list items */
   padding: 0px 8px; /* Add padding to the rest of the list items */
 }
 

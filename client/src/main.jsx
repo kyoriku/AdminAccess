@@ -4,26 +4,20 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import App from './App.jsx';
-//import Navbar from './components/Navbar';
+import LandingPage from './pages/LandingPage.jsx';
 import DepartmentList from './pages/DepartmentList';
 import DepartmentAdd from './pages/DepartmentAdd';
 import DepartmentEdit from './pages/DepartmentEdit';
-
 import RoleList from './pages/RoleList';
 import RoleAdd from './pages/RoleAdd';
 import RoleEdit from './pages/RoleEdit';
-
 import EmployeeList from './pages/EmployeeList';
 import EmployeeAdd from './pages/EmployeeAdd';
 import EmployeeEdit from './pages/EmployeeEdit';
-
 import ManagerList from './pages/ManagerList';
 import ManagerAdd from './pages/ManagerAdd';
 import ManagerEdit from './pages/ManagerEdit';
-
 import ErrorPage from './pages/ErrorPage';
-import LoginPage from './pages/LoginPage';
-
 
 const router = createBrowserRouter([
   {
@@ -33,7 +27,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <LoginPage />,
+        element: <LandingPage />,
       },
       {
         path: '/departments',
