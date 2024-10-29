@@ -23,7 +23,7 @@ User.init(
     email: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
+      unique: 'unique_email_idx',
       validate: {
         isEmail: true,
       },
@@ -50,6 +50,13 @@ User.init(
         return updatedUserData;
       },
     },
+    indexes: [
+      {
+        unique: true,
+        fields: ['email'],
+        name: 'unique_email_idx'
+      }
+    ],
     sequelize,
     timestamps: false,
     freezeTableName: true,

@@ -47,7 +47,7 @@ Employee.init(
     role_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      References: {
+      references: {
         model: "role",
         key: "id",
       },
